@@ -11,7 +11,7 @@ changing a public function or its docstring.
 ### `agenerate_pdf`
 
 ```python
-async def agenerate_pdf(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, pdf_options: dict[str, Any] | None = None, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
+async def agenerate_pdf(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, pdf_options: dict[str, typing.Any] | None = None, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate a PDF (async) from a dict/ReportPayload payload.
@@ -25,7 +25,7 @@ payload `meta.limits` may only tighten it.
 ### `generate_pdf`
 
 ```python
-def generate_pdf(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, pdf_options: dict[str, Any] | None = None, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
+def generate_pdf(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, pdf_options: dict[str, typing.Any] | None = None, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate a PDF (sync) from a dict/ReportPayload payload.
@@ -33,7 +33,7 @@ Generate a PDF (sync) from a dict/ReportPayload payload.
 ### `agenerate_many`
 
 ```python
-async def agenerate_many(payloads: list[dict[str, typing.Any] | isis_report_lib.models.ReportPayload], pdf_options: dict[str, Any] | None = None, max_concurrency: int = 4, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> list[bytes]
+async def agenerate_many(payloads: list[dict[str, typing.Any] | isis_report_lib.models.ReportPayload], pdf_options: dict[str, typing.Any] | None = None, max_concurrency: int = 4, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> list[bytes]
 ```
 
 Generate several PDFs concurrently, rejoining results in input order.
@@ -44,7 +44,7 @@ For mixed options per report, use `asyncio.gather` over `agenerate_pdf` directly
 ### `generate_many`
 
 ```python
-def generate_many(payloads: list[dict[str, typing.Any] | isis_report_lib.models.ReportPayload], pdf_options: dict[str, Any] | None = None, max_concurrency: int = 4, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> list[bytes]
+def generate_many(payloads: list[dict[str, typing.Any] | isis_report_lib.models.ReportPayload], pdf_options: dict[str, typing.Any] | None = None, max_concurrency: int = 4, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> list[bytes]
 ```
 
 Generate several PDFs concurrently (sync); results come back in input order.
@@ -52,7 +52,7 @@ Generate several PDFs concurrently (sync); results come back in input order.
 ### `agenerate_pdf_from_toon`
 
 ```python
-async def agenerate_pdf_from_toon(text: str, pdf_options: dict[str, Any] | None = None, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
+async def agenerate_pdf_from_toon(text: str, pdf_options: dict[str, typing.Any] | None = None, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate a PDF (async) from `.toon` text.
@@ -60,7 +60,7 @@ Generate a PDF (async) from `.toon` text.
 ### `generate_pdf_from_toon`
 
 ```python
-def generate_pdf_from_toon(text: str, pdf_options: dict[str, Any] | None = None, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
+def generate_pdf_from_toon(text: str, pdf_options: dict[str, typing.Any] | None = None, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate a PDF (sync) from `.toon` text.
@@ -68,7 +68,7 @@ Generate a PDF (sync) from `.toon` text.
 ### `agenerate_xlsx`
 
 ```python
-async def agenerate_xlsx(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, limits: dict[str, int] | None = None) -> bytes
+async def agenerate_xlsx(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate an .xlsx workbook (async, no browser needed).
@@ -76,7 +76,7 @@ Generate an .xlsx workbook (async, no browser needed).
 ### `generate_xlsx`
 
 ```python
-def generate_xlsx(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, limits: dict[str, int] | None = None) -> bytes
+def generate_xlsx(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, limits: dict[str, int] | None = None) -> bytes
 ```
 
 Generate an .xlsx workbook (sync, no browser needed).
@@ -100,7 +100,7 @@ Generate an .xlsx workbook (sync) from `.toon` text.
 ### `agenerate_csv`
 
 ```python
-async def agenerate_csv(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, delimiter: str = ',', bom: bool = False, limits: dict[str, int] | None = None) -> str
+async def agenerate_csv(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, delimiter: str = ',', bom: bool = False, limits: dict[str, int] | None = None) -> str
 ```
 
 Generate CSV text (async, no browser needed).
@@ -110,7 +110,7 @@ Generate CSV text (async, no browser needed).
 ### `generate_csv`
 
 ```python
-def generate_csv(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, delimiter: str = ',', bom: bool = False, limits: dict[str, int] | None = None) -> str
+def generate_csv(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, delimiter: str = ',', bom: bool = False, limits: dict[str, int] | None = None) -> str
 ```
 
 Generate CSV text (sync, no browser needed).
@@ -134,7 +134,7 @@ Generate CSV text (sync) from `.toon` text.
 ### `arender_html`
 
 ```python
-async def arender_html(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
+async def arender_html(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
 ```
 
 Render only the intermediate HTML (async, no Playwright).
@@ -142,7 +142,7 @@ Render only the intermediate HTML (async, no Playwright).
 ### `render_html`
 
 ```python
-def render_html(payload: dict[str, Any] | isis_report_lib.models.ReportPayload, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
+def render_html(payload: dict[str, typing.Any] | isis_report_lib.models.ReportPayload, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
 ```
 
 Render only the intermediate HTML (sync, no Playwright).
@@ -150,7 +150,7 @@ Render only the intermediate HTML (sync, no Playwright).
 ### `render_html_from_toon`
 
 ```python
-def render_html_from_toon(text: str, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
+def render_html_from_toon(text: str, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', inline_css: bool = False, limits: dict[str, int] | None = None) -> str
 ```
 
 Render HTML (sync) from `.toon` text.
@@ -160,7 +160,7 @@ Render HTML (sync) from `.toon` text.
 ### `MetaInfo`
 
 ```python
-class MetaInfo(*, title: str | None = None, sub_title: str | None = None, company: str | None = None, mode: str = 'exact', page: dict[str, Any] | None = None, locale: str | None = None, currency: str | None = None, accent_color: str | None = None, logo: str | None = None, watermark: Any = None, printed_at: Any = None, summary_side: Any = None, source_note: Any = None, empty_text: Any = None, limits: Any = None) -> None
+class MetaInfo(*, title: str | None = None, sub_title: str | None = None, company: str | None = None, mode: str = 'exact', page: dict[str, typing.Any] | None = None, locale: str | None = None, currency: str | None = None, accent_color: str | None = None, logo: str | None = None, watermark: Any = None, printed_at: Any = None, summary_side: Any = None, source_note: Any = None, empty_text: Any = None, limits: Any = None) -> None
 ```
 
 Report metadata.
@@ -168,7 +168,7 @@ Report metadata.
 ### `ReportPayload`
 
 ```python
-class ReportPayload(*, meta: isis_report_lib.models.MetaInfo | None = None, layout: dict[str, Any] | None = None, data: list[typing.Any] = <factory>, sections: list[dict[str, Any]] | None = None) -> None
+class ReportPayload(*, meta: isis_report_lib.models.MetaInfo | None = None, layout: dict[str, typing.Any] | None = None, data: list[typing.Any] = <factory>, sections: list[dict[str, typing.Any]] | None = None) -> None
 ```
 
 Report payload: metadata + optional hierarchical layout + data.
@@ -235,7 +235,7 @@ Header-only layout for data already in template format (records with `fields`).
 ### `from_csv`
 
 ```python
-def from_csv(source: str | pathlib.Path | Any, meta: dict[str, Any] | None = None, layout: dict[str, Any] | None = None, delimiter: str = ',', encoding: str = 'utf-8') -> dict[str, typing.Any]
+def from_csv(source: str | pathlib._local.Path | typing.Any, meta: dict[str, typing.Any] | None = None, layout: dict[str, typing.Any] | None = None, delimiter: str = ',', encoding: str = 'utf-8') -> dict[str, typing.Any]
 ```
 
 Build a payload from a CSV file (path or file object) with light type coercion.
@@ -243,7 +243,7 @@ Build a payload from a CSV file (path or file object) with light type coercion.
 ### `from_dataframe`
 
 ```python
-def from_dataframe(df: Any, meta: dict[str, Any] | None = None, layout: dict[str, Any] | None = None) -> dict[str, typing.Any]
+def from_dataframe(df: Any, meta: dict[str, typing.Any] | None = None, layout: dict[str, typing.Any] | None = None) -> dict[str, typing.Any]
 ```
 
 Build a payload from a `pandas.DataFrame` (columns become fields).
@@ -251,10 +251,25 @@ Build a payload from a `pandas.DataFrame` (columns become fields).
 ### `from_json`
 
 ```python
-def from_json(source: str | pathlib.Path | Any, meta: dict[str, Any] | None = None, layout: dict[str, Any] | None = None, encoding: str = 'utf-8') -> dict[str, typing.Any]
+def from_json(source: str | pathlib._local.Path | typing.Any, meta: dict[str, typing.Any] | None = None, layout: dict[str, typing.Any] | None = None, encoding: str = 'utf-8') -> dict[str, typing.Any]
 ```
 
 Build a payload from JSON: a list becomes `data`; a full payload dict passes through.
+
+### `from_jsonl`
+
+```python
+def from_jsonl(source: str | pathlib._local.Path | typing.TextIO, meta: dict[str, typing.Any] | None = None, layout: dict[str, typing.Any] | None = None, encoding: str = 'utf-8') -> dict[str, typing.Any]
+```
+
+Build a payload from JSON Lines: each line must be a JSON object.
+
+- `source` can be a path, `pathlib.Path`, or an opened file-like object.
+- Blank or whitespace-only lines are ignored.
+- If a line cannot be parsed as JSON, or does not contain a JSON object, a
+  `ValueError` is raised with the offending line number (1-based).
+- `meta` and `layout` are merged into the resulting payload the same way
+  `from_json` does.
 
 ### `payload_schema`
 
@@ -269,7 +284,7 @@ Return the JSON Schema of the report payload (for editors and validation).
 ### `format_value`
 
 ```python
-def format_value(value: Any, format_mask: str, locale: str = 'pt-BR', currency: str | None = None, field: dict[str, Any] | None = None) -> str
+def format_value(value: Any, format_mask: str, locale: str = 'pt-BR', currency: str | None = None, field: dict[str, typing.Any] | None = None) -> str
 ```
 
 Format a value according to the mask and locale.
@@ -295,7 +310,7 @@ Build the `fmt(value, mask)` helper bound to the payload's locale/currency.
 ### `field_text`
 
 ```python
-def field_text(value: Any, field: dict[str, Any] | None) -> str | None
+def field_text(value: Any, field: dict[str, typing.Any] | None) -> str | None
 ```
 
 Mapped display text via `substitutions`/`missing_text`, else None.
@@ -359,7 +374,7 @@ comparison operator is a catch-all default. Style keys are any of
 ### `collect_tables`
 
 ```python
-def collect_tables(dataset: dict[str, typing.Any], layout: dict[str, typing.Any], meta: dict[str, Any] | None = None) -> tuple[list[isis_report_lib.export.Table], list[tuple[str, typing.Any, str]]]
+def collect_tables(dataset: dict[str, typing.Any], layout: dict[str, typing.Any], meta: dict[str, typing.Any] | None = None) -> tuple[list[isis_report_lib.export.Table], list[tuple[str, typing.Any, str]]]
 ```
 
 Flatten (dataset, layout) into tables plus (label, value, mask) summary rows.
@@ -389,8 +404,7 @@ If x is not a number or if base is given, then x must be a string,
 bytes, or bytearray instance representing an integer literal in the
 given base.  The literal can be preceded by '+' or '-' and be surrounded
 by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
-Base 0 means to interpret the base from the string as an integer
-iteral.
+Base 0 means to interpret the base from the string as an integer literal.
 >>> int('0b100', base=0)
 4
 
@@ -453,7 +467,7 @@ async def execute(self, payload: dict[str, typing.Any]) -> bytes
 ### `TabularReportService`
 
 ```python
-class TabularReportService(pdf_options: dict[str, Any] | None = None, template_dir: str | pathlib.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> None
+class TabularReportService(pdf_options: dict[str, typing.Any] | None = None, template_dir: str | pathlib._local.Path | None = None, template_name: str = 'tabular.jinja', allowed_hosts: list[str] | None = None, limits: dict[str, int] | None = None) -> None
 ```
 
 Default tabular implementation of the pipeline.

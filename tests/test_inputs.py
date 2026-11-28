@@ -1,5 +1,6 @@
-"""Payload builder tests (pandas/CSV/JSON/schema)."""
+"""Payload builder tests (pandas/CSV/JSON/JSONL/schema)."""
 
+import io
 import json
 
 import pytest
@@ -97,33 +98,83 @@ def test_clean_value_edge_cases():
 
 
 def test_from_json_file_handle():
-    import io
-    import pathlib, tempfile
-    import pytest
-
-    from isis_report_lib.inputs import from_json, from_jsonl
+    from isis_report_lib.inputs import from_json
 
     assert from_json(io.StringIO('[{"a": 1}]')) == {"data": [{"a": 1}]}
 
-    jsonl_content = """{\"a\": 1}\n\n{\"b\": 2}\n   \n{\"c\": 3}\n"""
-    handle = io.StringIO(jsonl_content)
+
+def test_from_jsonl_valid_file_path(tmp_path):
+    from isis_report_lib.inputs import from_jsonl
+
+    src = tmp_path / "data.jsonl"
+    src.write_text('{"x": 10}\n{"y": 20}\n', encoding="utf-8")
+    payload = from_jsonl(src)
+    assert payload["data"] == [{"x": 10}, {"y": 20}]
+
+
+def test_from_jsonl_valid_file_handle():
+    from isis_report_lib.inputs import from_jsonl
+
+    handle = io.StringIO('{"a": 1}\n{"b": 2}\n')
     payload = from_jsonl(handle)
+    assert payload["data"] == [{"a": 1}, {"b": 2}]
+
+
+def test_from_jsonl_skips_blank_lines():
+    from isis_report_lib.inputs import from_jsonl
+
+    content = '{"a": 1}\n\n{"b": 2}\n   \n{"c": 3}\n'
+    payload = from_jsonl(io.StringIO(content))
     assert payload["data"] == [{"a": 1}, {"b": 2}, {"c": 3}]
 
-    tmp = tempfile.NamedTemporaryFile(delete=False, mode='w', encoding='utf-8')
-    tmp.write('{"x": 10}\n{"y": 20}\n')
-    tmp.close()
-    p = pathlib.Path(tmp.name)
-    payload2 = from_jsonl(p, meta={"title": "T"}, layout={"x": {"label": "X"}})
-    assert payload2["meta"]["title"] == "T"
-    assert payload2["layout"]["x"]["label"] == "X"
-    assert payload2["data"] == [{"x": 10}, {"y": 20}]
 
-    bad_content = "{\"a\": 1}\n{invalid}\n"
-    bad_handle = io.StringIO(bad_content)
+def test_from_jsonl_meta_merged(tmp_path):
+    from isis_report_lib.inputs import from_jsonl
+
+    src = tmp_path / "data.jsonl"
+    src.write_text('{"x": 10}\n', encoding="utf-8")
+    payload = from_jsonl(src, meta={"title": "T"})
+    assert payload["meta"] == {"title": "T"}
+    assert payload["data"] == [{"x": 10}]
+
+
+def test_from_jsonl_layout_merged(tmp_path):
+    from isis_report_lib.inputs import from_jsonl
+
+    src = tmp_path / "data.jsonl"
+    src.write_text('{"x": 10}\n', encoding="utf-8")
+    payload = from_jsonl(src, layout={"x": {"label": "X"}})
+    assert payload["layout"] == {"x": {"label": "X"}}
+    assert payload["data"] == [{"x": 10}]
+
+
+def test_from_jsonl_malformed_json_raises_with_line_number():
+    from isis_report_lib.inputs import from_jsonl
+
+    bad = io.StringIO('{"a": 1}\n{invalid}\n')
     with pytest.raises(ValueError, match="Malformed JSON on line 2"):
-        from_jsonl(bad_handle)
+        from_jsonl(bad)
 
-    nonobj = "[1,2]\n{\"a\": 3}\n"
+
+def test_from_jsonl_non_object_raises_with_line_number():
+    from isis_report_lib.inputs import from_jsonl
+
     with pytest.raises(ValueError, match="JSON value on line 1 is not an object"):
-        from_jsonl(io.StringIO(nonobj))
+        from_jsonl(io.StringIO("[1, 2]\n"))
+
+
+def test_from_jsonl_does_not_close_caller_handle():
+    from isis_report_lib.inputs import from_jsonl
+
+    handle = io.StringIO('{"a": 1}\n')
+    from_jsonl(handle)
+    assert not handle.closed
+
+
+def test_from_jsonl_excessive_nesting_raises_with_line_number():
+    from isis_report_lib.inputs import from_jsonl
+
+    # Build a deeply nested structure that exceeds Python's recursion limit
+    deep = "[" * 1200 + "]" * 1200
+    with pytest.raises(ValueError, match=r"line 1"):
+        from_jsonl(io.StringIO(deep))

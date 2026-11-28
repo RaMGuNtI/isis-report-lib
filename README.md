@@ -167,7 +167,7 @@ from isis_report_lib.inputs import from_csv, from_dataframe, from_json, from_jso
 generate_pdf(from_dataframe(df, meta={"title": "Sales", "locale": "en-US"}))
 generate_pdf(from_csv("sales.csv", delimiter=";"))   # light int/float/bool coercion
 generate_pdf(from_json("payload.json"))              # list -> data; full payload passes through
-generate_pdf(from_jsonl("data.jsonl"))            # newline‑delimited JSON objects
+generate_pdf(from_jsonl("data.jsonl"))               # newline-delimited JSON objects
 ```
 
 `pandas` is optional: `pip install isis-report-lib[pandas]` (`NaN`/`NaT` become `None`, `Timestamp` becomes `datetime`).

@@ -10,7 +10,7 @@ for ``generate_pdf`` / ``generate_xlsx`` / ``generate_csv``::
 import csv as csv_module
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, TextIO
 
 
 def _require_pandas():
@@ -121,7 +121,7 @@ def _with_meta_layout(payload: dict[str, Any], meta: dict[str, Any] | None, layo
 
 
 def from_jsonl(
-    source: str | Path | Any,
+    source: str | Path | TextIO,
     meta: dict[str, Any] | None = None,
     layout: dict[str, Any] | None = None,
     encoding: str = "utf-8",
@@ -129,13 +129,14 @@ def from_jsonl(
     """Build a payload from JSON Lines: each line must be a JSON object.
 
     - ``source`` can be a path, :class:`pathlib.Path`, or an opened file-like object.
-    - Blank or whitespace‑only lines are ignored.
+    - Blank or whitespace-only lines are ignored.
     - If a line cannot be parsed as JSON, or does not contain a JSON object, a
-      :class:`ValueError` is raised with the offending line number (1‑based).
+      :class:`ValueError` is raised with the offending line number (1-based).
     - ``meta`` and ``layout`` are merged into the resulting payload the same way
       :func:`from_json` does.
     """
     close = False
+    handle: TextIO
     if isinstance(source, (str, Path)):
         handle = open(source, encoding=encoding)
         close = True
@@ -149,10 +150,10 @@ def from_jsonl(
                 continue
             try:
                 obj = json.loads(line)
-            except (json.JSONDecodeError, RecursionError) as e:
-                raise ValueError(f"Malformed JSON on line {idx}: {e}") from e
             except json.JSONDecodeError as e:
                 raise ValueError(f"Malformed JSON on line {idx}: {e.msg}") from e
+            except RecursionError as e:
+                raise ValueError(f"JSON on line {idx} is nested too deeply to parse") from e
             if not isinstance(obj, dict):
                 raise ValueError(f"JSON value on line {idx} is not an object")
             records.append(obj)

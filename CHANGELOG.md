@@ -8,8 +8,13 @@ draft GitHub Release, uploads to PyPI via trusted publishing and publishes the
 release last.
 
 ## [Unreleased]
+<<<<<<< Updated upstream
 ### Changed
 - Dockerfile pins the Python base image by digest and installs the runtime from a hash-pinned `docker/requirements.txt`
+=======
+### Added
+- `from_jsonl(source, meta, layout, encoding)` input builder: reads newline-delimited JSON (JSONL), one object per line, with blank-line skipping and line-numbered `ValueError` for malformed or non-object records.
+>>>>>>> Stashed changes
 
 ## [0.15.1] - 2026-11-26
 ### Added
